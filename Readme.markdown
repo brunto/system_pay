@@ -1,6 +1,11 @@
+This fork can be used with a Rails version < 3
+
+# TODO
+- Update form helper, name and value is wrong
+
 # SystemPay
 
-SystemPay is a gem to ease credit card payment with Natixis Paiements / CyberplusPaiement (Banque Populaire) bank system. It's a Ruby on Rails port of the connexion kits published by the bank. 
+SystemPay is a gem to ease credit card payment with Natixis Paiements / CyberplusPaiement (Banque Populaire) bank system. It's a Ruby on Rails port of the connexion kits published by the bank.
 
 * Gem Homepage : [site](http://github.com/iMenlo/system_pay)
 * Cyberplus SystemPay documentation : [site](https://systempay.cyberpluspaiement.com)
@@ -12,31 +17,31 @@ SystemPay is a gem to ease credit card payment with Natixis Paiements / Cyberplu
 or, in your Gemfile
 
     gem 'system_pay'
-    
+
 ## USAGE
 
 ### in environment.rb :
 
     # Your vads_site_id
-    SystemPay.vads_site_id = '654927625'   
+    SystemPay.vads_site_id = '654927625'
 
 ### in development.rb :
 
     # Your test certificat
-    SystemPay.certificat = '9123456299120752'	
-  
+    SystemPay.certificat = '9123456299120752'
+
 ### in production.rb :
 
     # Your production certificat
-    SystemPay.certificat = '7193156219823756'	
+    SystemPay.certificat = '7193156219823756'
     # Set the production mode
-    SystemPay.vads_ctx_mode = 'PRODUCTION'	    
+    SystemPay.vads_ctx_mode = 'PRODUCTION'
 
 
 ### in order controller :
 
     helper :'system_pay/form'
-    @system_pay = SystemPay.new(:amount => @order.amount_in_cents, :trans_id => @order.id)   
+    @system_pay = SystemPay.new(:amount => @order.amount_in_cents, :trans_id => @order.id)
 
 ### in order view :
 
@@ -53,7 +58,7 @@ or, in your Gemfile
       def bank_callback
         @system_pay = SystemPay.new(params)
         if @system_pay.valid_signature?(params[:signature])
-        
+
           order_transaction = OrderTransaction.find_by_reference params[:reference], :last
           order = order_transaction.order
 
@@ -75,7 +80,7 @@ or, in your Gemfile
           end
 
           order_transaction.update_attribute :success, true
-      
+
           receipt = "0"
         else
           order.transaction_declined!
@@ -94,4 +99,4 @@ This gem is inspired by Novelys [paiement_cic](http://github.com/novelys/paiemen
 
 ## License
 Copyright (c) 2012 iMenlo Team, released under the MIT license
-    
+
