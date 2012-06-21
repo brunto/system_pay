@@ -1,7 +1,5 @@
 This fork can be used with a Rails version < 3
 
-# TODO
-- Update form helper, name and value is wrong
 
 # SystemPay
 
