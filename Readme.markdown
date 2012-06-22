@@ -10,31 +10,28 @@ SystemPay is a gem to ease credit card payment with Natixis Paiements / Cyberplu
 
 ## INSTALL
 
-    gem install system_pay
-
-or, in your Gemfile
-
-    gem 'system_pay'
+In vendor/plugins
+    git clone git://github.com/brunto/system_pay.git
 
 ## USAGE
 
 ### in environment.rb :
 
+Add 'system_pay' in config.plugins
+
+And add this :
+
     # Your vads_site_id
     SystemPay.vads_site_id = '654927625'
-
-### in development.rb :
-
-    # Your test certificat
-    SystemPay.certificat = '9123456299120752'
-
-### in production.rb :
-
-    # Your production certificat
-    SystemPay.certificat = '7193156219823756'
-    # Set the production mode
-    SystemPay.vads_ctx_mode = 'PRODUCTION'
-
+    if ENV['RAILS_ENV'] == 'production'
+      # Your production certificat
+      SystemPay.certificat = '7193156219823756'
+      # Set the production mode
+      SystemPay.vads_ctx_mode = 'PRODUCTION'
+    else
+      # Your test certificat
+      SystemPay.certificat = '9123456299120752'
+    end
 
 ### in order controller :
 
@@ -97,4 +94,3 @@ This gem is inspired by Novelys [paiement_cic](http://github.com/novelys/paiemen
 
 ## License
 Copyright (c) 2012 iMenlo Team, released under the MIT license
-

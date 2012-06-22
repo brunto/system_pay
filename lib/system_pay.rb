@@ -81,7 +81,7 @@ class SystemPay
 
   # Public: Verify that the returned signature is valid.
   # Return boolean
-  def self.valid_signature?(params)
+  def valid_signature?(params)
     vads_params = params.sort.select{|value| value[0].match(/^vads_/)}.map{|value| value[1]}
     sign(vads_params) == params['signature']
   end
