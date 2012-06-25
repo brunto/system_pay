@@ -1,4 +1,4 @@
-This fork can be used with a Rails version < 3
+This fork is for a ruby version 1.8.6 and for a Rails version < 3
 
 
 # SystemPay

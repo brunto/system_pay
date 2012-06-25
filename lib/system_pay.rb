@@ -71,7 +71,7 @@ class SystemPay
 
   # Public: Perform the signature of the request based on the parameters
   def signature
-    self.class.sign(sorted_values)
+    sign(sorted_values)
   end
 
   # Public: Hash with parameters and value of the object
@@ -82,14 +82,14 @@ class SystemPay
   # Public: Verify that the returned signature is valid.
   # Return boolean
   def valid_signature?(params)
-    vads_params = params.sort.select{|value| value[0].match(/^vads_/)}.map{|value| value[1]}
+    vads_params = params.sort.select{|value| value[0].to_s.match(/^vads_/)}.map{|value| value[1]}
     sign(vads_params) == params['signature']
   end
 
 
   private
 
-  def self.sign(values)
+  def sign(values)
     Digest::SHA1.hexdigest((values+[certificat]).join("+"))
   end
 
@@ -97,12 +97,12 @@ class SystemPay
     instance_variables.map { |name| [name[1..-1], instance_variable_get(name)] }
   end
 
-  def self.class_variables_array
-    class_variables.select{|name| name.match(/^@@vads_/)}.map { |name| [name[2..-1], class_variable_get(name)] }
+  def class_variables_array
+    self.class.class_variables.select{|name| name.match(/^@@vads_/)}.map { |name| [name[2..-1], self.class.send(:class_variable_get, name)] }
   end
 
   def sorted_array
-    (instance_variables_array + self.class.class_variables_array).uniq.sort
+    (instance_variables_array + class_variables_array).uniq.sort
   end
 
   def sorted_values
